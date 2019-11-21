@@ -42,6 +42,7 @@
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="Game1.cs" />
+    <Compile Include="Managers\ScreenManager.cs" />
     <Compile Include="Player\InputHandler.cs" />
     <Compile Include="Player\ShopKeeper.cs" />
     <Compile Include="Program.cs" />
@@ -61,6 +62,12 @@
   <ItemGroup>
     <MonoGameContentReference Include="Content\Content.mgcb" />
     <None Include="app.manifest" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\PlayerCrafting\PlayerCrafting.csproj">
+      <Project>{570eed06-5548-4021-bd0c-9a80e19e7b46}</Project>
+      <Name>PlayerCrafting</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Import Project="$(MSBuildExtensionsPath)\MonoGame\v3.0\MonoGame.Content.Builder.targets" />
