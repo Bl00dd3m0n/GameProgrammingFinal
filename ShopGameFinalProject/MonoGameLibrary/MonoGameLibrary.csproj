@@ -71,7 +71,7 @@
     <Compile Include="ThreeD\SkyBox.cs" />
     <Compile Include="Util\FPS.cs" />
     <Compile Include="Util\GameConsole.cs" />
-    <Compile Include="Util\InputHandler.cs" />
+    <Compile Include="Util\KeyboardHandler.cs" />
     <Compile Include="Util\RandomQueue.cs" />
     <Compile Include="Util\ScoreService.cs" />
   </ItemGroup>
