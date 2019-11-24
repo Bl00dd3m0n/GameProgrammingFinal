@@ -3,8 +3,6 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
 VisualStudioVersion = 15.0.28307.852
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MonoGameLibrary", "MonoGameLibrary\MonoGameLibrary.csproj", "{AAD7C5C6-AA67-45C6-8B7C-22906FA79E9E}"
-EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ShopGame", "ShopGame\ShopGame.csproj", "{56B747C9-F4ED-49F7-98A5-92E89467D9F9}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CraftingLibrary", "CraftingLibrary\CraftingLibrary.csproj", "{35815C19-F0FF-480D-A90D-9D4320C46168}"
@@ -19,12 +17,6 @@ Global
 		Release|x86 = Release|x86
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{AAD7C5C6-AA67-45C6-8B7C-22906FA79E9E}.Debug|Any CPU.ActiveCfg = Debug|x86
-		{AAD7C5C6-AA67-45C6-8B7C-22906FA79E9E}.Debug|x86.ActiveCfg = Debug|x86
-		{AAD7C5C6-AA67-45C6-8B7C-22906FA79E9E}.Debug|x86.Build.0 = Debug|x86
-		{AAD7C5C6-AA67-45C6-8B7C-22906FA79E9E}.Release|Any CPU.ActiveCfg = Release|x86
-		{AAD7C5C6-AA67-45C6-8B7C-22906FA79E9E}.Release|x86.ActiveCfg = Release|x86
-		{AAD7C5C6-AA67-45C6-8B7C-22906FA79E9E}.Release|x86.Build.0 = Release|x86
 		{56B747C9-F4ED-49F7-98A5-92E89467D9F9}.Debug|Any CPU.ActiveCfg = Debug|x86
 		{56B747C9-F4ED-49F7-98A5-92E89467D9F9}.Debug|x86.ActiveCfg = Debug|x86
 		{56B747C9-F4ED-49F7-98A5-92E89467D9F9}.Debug|x86.Build.0 = Debug|x86

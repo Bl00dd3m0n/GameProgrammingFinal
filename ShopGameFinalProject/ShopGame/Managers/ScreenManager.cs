@@ -2,7 +2,6 @@
 using CraftingLibrary.Recipes;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
-using MonoGameLibrary.Sprite;
 using ShopGame;
 using ShopGame.Pages;
 using ShopGame.GameSceneObjects;
