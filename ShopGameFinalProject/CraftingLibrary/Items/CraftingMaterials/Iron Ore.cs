@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace CraftingLibrary.Items.CraftingMaterials
 {
-    class Iron_Ore : IItem
+    public class Iron_Ore : IItem
     {
         public string Name { get; set; }
 

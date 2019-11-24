@@ -19,11 +19,9 @@ namespace ShopGame.Pages
     {
 
         protected delegate void Craft();
-        protected Recipe recipe;
         protected TemplateCraftingSystem crafting;
         Button craft;
         Button.ReturnInventory action;//CraftItem
-        Button pressedButton;
         float ButtonPressedtimer;
         public MonoGameCrafting(Game game, ShopKeeper player, ScreenManager screen) : base(game,player)
         {
@@ -33,7 +31,7 @@ namespace ShopGame.Pages
             this.ButtonPressedtimer = 0;
         }
 
-        protected void SetButtons()
+        protected override void SetButtons()
         {
             items = new RecipeButtons[crafting.SystemRecipes.Count()];
         }
@@ -71,7 +69,7 @@ namespace ShopGame.Pages
         {
             craft = new Button(Game);
             craft.Initialize();
-            craft.Draw(gameTime, sb, font, "Craft", new Vector2(500, 100 + recipe.RecipeItems.Count() * font.MeasureString(recipe.RecipeItems[0]).Y), Color.White);
+            craft.Draw(gameTime, sb, font, "Craft", new Vector2(500, 100 + recipe.RecipeItems.Count() * 20), Color.White);
         }
 
 
@@ -93,7 +91,7 @@ namespace ShopGame.Pages
                     if (items[i].Contains(player.CursorPosition.ToPoint()))
                     {
                         recipe = ((RecipeButtons)items[i]).recipe;
-                        crafting.LoadRecipe(recipe, true);
+                        recipe.LoadRecipe(true, someInventory);
                         RenderRecipe = true;
                         items[i].Buttonpressed();
                         pressedButton = items[i];
@@ -113,6 +111,7 @@ namespace ShopGame.Pages
             if (recipe != null)
             {
                 DrawRecipe(gameTime, recipe);
+                NewButton(gameTime);
             }
             sb.End();
         }

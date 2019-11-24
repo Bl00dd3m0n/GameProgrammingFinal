@@ -12,7 +12,9 @@ namespace CraftingLibrary.Recipes.Furnace
     {
         public BladeRecipe()
         {
-            craftedItems.Add(new Blade());
+            Blade CreatedBlade = new Blade();
+            CreatedBlade.itemRecipe = this;
+            craftedItems.Add(CreatedBlade);
             itemsNeeded.Add(new Iron_Ore(), 3);
         }
     }

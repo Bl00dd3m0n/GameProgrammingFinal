@@ -1,4 +1,6 @@
 ﻿using Crafting;
+using Crafting.Items;
+using CraftingLibrary.Items.CraftingMaterials;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using ShopGame.Pages;
@@ -31,6 +33,8 @@ namespace ShopGame.GameSceneObjects
             CursorPosition = new Vector2(0, 0);
             CursorDown = false;
             game.Components.Add(input);
+            inventory.Add(new Iron_Ore(), 120);
+            inventory.Add(new Logs(), 20);
             TextureName = "ShopKeeper";
         }
 
@@ -61,6 +65,12 @@ namespace ShopGame.GameSceneObjects
                 }
             }
         }
+
+        internal void OpenInventory()
+        {
+            screen.ScreenState = ScreenStateEnum.Inventory;
+        }
+
         protected override void LoadContent()
         {
             base.LoadContent();

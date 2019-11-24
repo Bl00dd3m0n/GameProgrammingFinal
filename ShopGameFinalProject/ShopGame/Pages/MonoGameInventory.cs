@@ -17,8 +17,9 @@ namespace ShopGame.Pages
         public MonoGameInventory(Game game, ShopKeeper player, ScreenManager screen) : base(game, player)
         {
             this.screen = screen;
-            items = new ItemsButtons[items.Length];
+            items = new ItemsButtons[player.inventory.GetInventory().Count];
             this.spriteBatch = sb;
+            SetButtons();
         }
     }
 }

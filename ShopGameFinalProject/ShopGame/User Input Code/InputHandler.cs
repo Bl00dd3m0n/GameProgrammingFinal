@@ -23,6 +23,9 @@ namespace ShopGame
         ShopKeeper player;
         internal bool SwitchScenes;
         internal Vector2 Direction;
+
+        internal bool OpenInventory { get;  set; }
+
         public InputHandler(Game game, ShopKeeper player) : base(game)
         {
             this.keyboard = new KeyboardHandler(this);
@@ -64,6 +67,10 @@ namespace ShopGame
             if (SwitchScenes)
             {
                 player.OpenScene();
+            }
+            if(OpenInventory)
+            {
+                player.OpenInventory();
             }
         }
     }
@@ -110,6 +117,7 @@ namespace ShopGame
         Keys Left;
         Keys Right;
         Keys OpenScreen;
+        Keys OpenInventory;
         public KeyboardHandler(InputHandler handler)
         {
             this.handler = handler;
@@ -123,6 +131,7 @@ namespace ShopGame
             Left = Keys.Left;
             Right = Keys.Right;
             OpenScreen = Keys.F;
+            OpenInventory = Keys.B;
         }
         public bool KeyPressed(Keys key)
         {
@@ -148,6 +157,7 @@ namespace ShopGame
         }
         public void ChangeScreenScene()
         {
+            handler.OpenInventory = KeyPressed(OpenInventory);
             handler.SwitchScenes = KeyPressed(OpenScreen);
         }
         public void Update()

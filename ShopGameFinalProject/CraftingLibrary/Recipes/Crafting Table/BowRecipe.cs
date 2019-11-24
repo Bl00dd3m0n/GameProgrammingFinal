@@ -13,8 +13,10 @@ namespace CraftingLibrary.Recipes.Crafting_Table
     {
         public BowRecipe()
         {
-            craftedItems.Add(new Bow());
+            Bow createdBow = new Bow();
             itemsNeeded.Add(new Handle(),3);
+            createdBow.itemRecipe = this;
+            craftedItems.Add(createdBow);
         }
     }
 }

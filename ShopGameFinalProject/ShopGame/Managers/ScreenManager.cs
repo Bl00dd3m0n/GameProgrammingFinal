@@ -56,6 +56,10 @@ namespace ShopGameFinalProject.Managers
                 else
                 {
                     ShowExit = true;
+                    if(screenState == ScreenStateEnum.Inventory)
+                    {
+                        screen = new MonoGameInventory(Game, player, this);
+                    }
                     if (screenState == ScreenStateEnum.Crafting)
                     {
                         screen = new MonogameCraftingTable(Game, player, spriteBatch,this);

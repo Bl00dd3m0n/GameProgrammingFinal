@@ -13,7 +13,9 @@ namespace CraftingLibrary.Recipes
     {
         public SwordRecipe()
         {
-            craftedItems.Add(new Sword());
+            Sword CreatedSword = new Sword();
+            CreatedSword.itemRecipe = this;
+            craftedItems.Add(CreatedSword);
             itemsNeeded.Add(new Blade(),2);
             itemsNeeded.Add(new Handle());
         }

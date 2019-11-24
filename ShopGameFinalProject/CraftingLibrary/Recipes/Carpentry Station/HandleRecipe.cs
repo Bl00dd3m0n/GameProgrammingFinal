@@ -12,7 +12,9 @@ namespace CraftingLibrary.Recipes.Carpentry_Station
     {
         public HandleRecipe()
         {
-            craftedItems.Add(new Handle(),2);
+            Handle CreatedHandle = new Handle();
+            CreatedHandle.itemRecipe = this;
+            craftedItems.Add(CreatedHandle,2);
             itemsNeeded.Add(new Handle(), 1);
         }
     }

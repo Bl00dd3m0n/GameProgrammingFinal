@@ -24,7 +24,8 @@ namespace ShopGame.Pages
         protected ItemsButtons[] items;
         protected Inventory someInventory;
         protected bool CraftablePage;
-        SpriteBatch spriteBatch;
+        protected Button pressedButton;
+        protected Recipe recipe;
         public MonoGamePage(Game game, ShopKeeper player) : base(game, player)
         {
             this.CraftablePage = false;
@@ -40,6 +41,11 @@ namespace ShopGame.Pages
             spriteBatch.Draw(this.Texture, new Rectangle((int)this.Location.X, (int)this.Location.Y, (int)this.Texture.Width, (int)this.Texture.Height), null, Color.White, MathHelper.ToRadians(Rotate), new Vector2(0, 0), SpriteEffects.None, 0);
         }
 
+        protected virtual void SetButtons()
+        {
+            items = new ItemsButtons[someInventory.GetInventory().Count];
+        }
+
         protected virtual void CreateButtons()
         {
             for (int i = 0; i < items.Length; i++)
@@ -51,6 +57,23 @@ namespace ShopGame.Pages
         public override void Draw(GameTime gameTime)
         {
             base.Draw(gameTime);
+            sb.Begin();
+            this.Draw(sb);
+            for (int i = 0; i < items.Length; i++)
+            {
+
+                //TODO add recipe for inventory items
+                //if (items[i].item.GetType().GetInterface("ICraftable") != null)
+                //{
+                //    recipe = ((ICraftable)items[i].item).itemRecipe;
+                //}//This resets recipe for the crafting menus don't do this.
+                items[i].Draw(gameTime, sb, font, items[i].item.Name, new Vector2(marginx, i * items[i].bounds.Height + marginy));//NOTE Since crafted items at the moment are only one object type using [0] should be fine, however, if you can craft multiple things possibly change this
+            }
+            if (recipe != null)
+            {
+                DrawRecipe(gameTime, recipe);
+            }
+            sb.End();
         }
         protected override void LoadContent()
         {
@@ -92,9 +115,8 @@ namespace ShopGame.Pages
 
                     Color color = new Color(Convert.ToUInt32(words[0]), Convert.ToUInt32(words[1]), Convert.ToUInt32(words[2]));
                     string ActualText = words[3];
-                    sb.DrawString(font, ActualText, new Vector2(500, 100 + recipe.RecipeItems.IndexOf(text) * font.MeasureString(text).Y), color);
+                    sb.DrawString(font, ActualText, new Vector2(500, 100 + recipe.RecipeItems.IndexOf(text) * 15), color);
                 }
-                NewButton(gameTime);
             }
         }
     }
