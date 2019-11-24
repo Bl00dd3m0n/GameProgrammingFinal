@@ -23,7 +23,7 @@ namespace ShopGame
         ShopKeeper player;
         internal bool SwitchScenes;
         internal Vector2 Direction;
-
+        internal bool CloseScene;
         internal bool OpenInventory { get;  set; }
 
         public InputHandler(Game game, ShopKeeper player) : base(game)
@@ -64,14 +64,9 @@ namespace ShopGame
 
         public void ChangeScreenScene()
         {
-            if (SwitchScenes)
-            {
-                player.OpenScene();
-            }
-            if(OpenInventory)
-            {
-                player.OpenInventory();
-            }
+            if (SwitchScenes) player.OpenScene();
+            if(OpenInventory) player.OpenInventory();
+            if (CloseScene) player.CloseScene();
         }
     }
     class MouseHandler
@@ -112,26 +107,35 @@ namespace ShopGame
         private KeyboardState prevKeyboardState;
         private KeyboardState keyboardState;
         InputHandler handler;
-        Keys Up;
-        Keys Down;
-        Keys Left;
-        Keys Right;
-        Keys OpenScreen;
-        Keys OpenInventory;
+        List<Keys> Up;
+        List<Keys> Down;
+        List<Keys> Left;
+        List<Keys> Right;
+        List<Keys> OpenScreen;
+        List<Keys> OpenInventory;
+        List<Keys> CloseScreen;
         public KeyboardHandler(InputHandler handler)
         {
+            Up = new List<Keys>();
+            Down = new List<Keys>();
+            Left = new List<Keys>();
+            Right = new List<Keys>();
+            OpenScreen = new List<Keys>();
+            OpenInventory = new List<Keys>();
+            CloseScreen = new List<Keys>();
             this.handler = handler;
             prevKeyboardState = Keyboard.GetState();
             SetKeys();
         }
         public void SetKeys()
         {
-            Up = Keys.Up;
-            Down = Keys.Down;
-            Left = Keys.Left;
-            Right = Keys.Right;
-            OpenScreen = Keys.F;
-            OpenInventory = Keys.B;
+            Up.Add(Keys.Up);
+            Down.Add(Keys.Down);
+            Left.Add(Keys.Left);
+            Right.Add(Keys.Right);
+            OpenScreen.Add(Keys.F);
+            OpenInventory.Add(Keys.B);
+            CloseScreen.Add(Keys.Escape);
         }
         public bool KeyPressed(Keys key)
         {
@@ -155,10 +159,29 @@ namespace ShopGame
             }
             return false;
         }
+
+        public bool KeyDown(List<Keys> keys)
+        {
+            foreach (Keys key in keys)
+            {
+                if (KeyDown(key)) return true;
+            }
+            return false;
+        }
+
+        public bool KeyPressed(List<Keys> keys)
+        {
+            foreach(Keys key in keys)
+            {
+                if (KeyPressed(key)) return true;
+            }
+            return false;
+        }
         public void ChangeScreenScene()
         {
             handler.OpenInventory = KeyPressed(OpenInventory);
             handler.SwitchScenes = KeyPressed(OpenScreen);
+            handler.CloseScene = KeyPressed(CloseScreen);
         }
         public void Update()
         {

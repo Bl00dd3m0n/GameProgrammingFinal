@@ -25,7 +25,7 @@ namespace ShopGame.GameSceneObjects
         public bool CursorDown;
         public ShopKeeper(Game game) : base(game)
         {
-            inventory = new Inventory(50);
+            inventory = new Inventory(300);
             input = new InputHandler(game,this);
             this.screen = new ScreenManager(game, this);
             this.screen.Initialize();
@@ -33,8 +33,8 @@ namespace ShopGame.GameSceneObjects
             CursorPosition = new Vector2(0, 0);
             CursorDown = false;
             game.Components.Add(input);
-            inventory.Add(new Iron_Ore(), 120);
-            inventory.Add(new Logs(), 20);
+            inventory.Add(new Iron_Ore(), 24);
+            inventory.Add(new Logs(), 4);
             TextureName = "ShopKeeper";
         }
 
@@ -64,6 +64,11 @@ namespace ShopGame.GameSceneObjects
                     }
                 }
             }
+        }
+
+        internal void CloseScene()
+        {
+            screen.ScreenState = ScreenStateEnum.Game;
         }
 
         internal void OpenInventory()

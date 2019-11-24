@@ -102,7 +102,7 @@ namespace ShopGame.Pages
                         {
                             craft.Buttonpressed();
                             pressedButton = craft;
-                            action();
+                            someInventory.Add(action());
                         }
                     }
                 }
