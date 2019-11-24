@@ -1,17 +1,18 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
+using System.Threading.Tasks;
 
-namespace Crafting.Items
+namespace CraftingLibrary.Items.CraftingMaterials
 {
-    public class Blade : IItem
+    class Logs
     {
         public string Name { get; set; }
 
         public int Price { get; set; }
 
-        public int Count { get; set; }
-        public Blade()
+        public Logs()
         {
             Name = this.GetType().Name;
         }

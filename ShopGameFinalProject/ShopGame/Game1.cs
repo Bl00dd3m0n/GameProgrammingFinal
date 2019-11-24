@@ -3,6 +3,8 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using ShopGame;
+using ShopGame.GameSceneObjects;
+using ShopGame.Managers;
 using ShopGameFinalProject.Managers;
 
 namespace ShopGameFinalProject
@@ -14,21 +16,24 @@ namespace ShopGameFinalProject
     {
         GraphicsDeviceManager graphics;
         SpriteBatch spriteBatch;
-
+        const int width = 1920;
+        const int height = 1080;
+        
         public Game1()
         {
             graphics = new GraphicsDeviceManager(this);
             this.IsMouseVisible = true;
             Content.RootDirectory = "Content";
-
-            ShopKeeper player = new ShopKeeper(this);
-            this.Components.Add(player);
-            player.inventory.Add(new Blade(),2);
-            player.inventory.Add(new Handle());
-            ScreenManager sm = new ScreenManager(this,graphics,player);
-            InputHandler input = new InputHandler(this,sm);
-            this.Components.Add(input);
-            this.Components.Add(sm);
+            PlayerManager playerManager = new PlayerManager(this);
+            graphics.PreferredBackBufferWidth = width;
+            graphics.PreferredBackBufferHeight = height;
+            this.Components.Add(playerManager);
+            FurnaceObject furnace = new FurnaceObject(this);
+            this.Components.Add(furnace);
+            CraftingTableObject table = new CraftingTableObject(this);
+            this.Components.Add(table);
+            WoodCuttingObject sawmill = new WoodCuttingObject(this);
+            this.Components.Add(sawmill);
         }
 
         /// <summary>

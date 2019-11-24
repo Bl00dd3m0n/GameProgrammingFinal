@@ -41,21 +41,31 @@
     <ApplicationManifest>app.manifest</ApplicationManifest>
   </PropertyGroup>
   <ItemGroup>
-    <Compile Include="Button.cs" />
-    <Compile Include="Crafting Pages\MonogameCraftingTable.cs" />
-    <Compile Include="Crafting Pages\ICraftingInterface.cs" />
-    <Compile Include="Crafting Pages\MonoGameCrafting.cs" />
-    <Compile Include="Crafting Pages\Screen.cs" />
+    <Compile Include="Pages\MonoGameInventory.cs" />
+    <Compile Include="GameSceneObjects\CraftingTableObject.cs" />
+    <Compile Include="GameSceneObjects\WoodCuttingObject.cs" />
+    <Compile Include="Pages\MonoGamePage.cs" />
+    <Compile Include="User Input Code\Button.cs" />
+    <Compile Include="Pages\MonoGameCarpentryStation.cs" />
+    <Compile Include="Pages\MonogameCraftingTable.cs" />
+    <Compile Include="Pages\ICraftingInterface.cs" />
+    <Compile Include="Pages\MonoGameCrafting.cs" />
+    <Compile Include="Pages\MonoGameFurnace.cs" />
+    <Compile Include="Pages\GameScreen.cs" />
+    <Compile Include="GameSceneObjects\CraftingObjects.cs" />
+    <Compile Include="GameSceneObjects\FurnaceObject.cs" />
     <Compile Include="Game1.cs" />
-    <Compile Include="InputHandler.cs" />
+    <Compile Include="User Input Code\InputHandler.cs" />
+    <Compile Include="Managers\PlayerManager.cs" />
     <Compile Include="Managers\ScreenManager.cs" />
-    <Compile Include="Player\InputHandler.cs" />
-    <Compile Include="Player\ShopKeeper.cs" />
+    <Compile Include="GameSceneObjects\CollidableGameObject.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="RecipeMenuButton.cs" />
-    <Compile Include="ShopKeeper.cs" />
+    <Compile Include="User Input Code\RecipeMenuButton.cs" />
+    <Compile Include="User Input Code\ItemButton.cs" />
+    <Compile Include="GameSceneObjects\ShopKeeper.cs" />
     <Compile Include="TextManager.cs" />
+    <Compile Include="Util.cs" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="MonoGame.Framework">

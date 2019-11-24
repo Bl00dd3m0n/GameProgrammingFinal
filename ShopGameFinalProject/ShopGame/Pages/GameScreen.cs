@@ -1,14 +1,15 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using ShopGame.GameSceneObjects;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace ShopGame.Crafting_Pages
+namespace ShopGame.Pages
 {
-    class Screen : DrawableGameComponent
+    class GameScreen : DrawableGameComponent
     {
         public Texture2D Texture { get; protected set; }
         public Vector2 Location;
@@ -20,7 +21,7 @@ namespace ShopGame.Crafting_Pages
         public Rectangle Boundaries;
         protected ShopKeeper player;
 
-        public Screen(Game game, ShopKeeper player) : base(game)
+        public GameScreen(Game game, ShopKeeper player) : base(game)
         {
             Rotate = 0;
             this.game = game;
@@ -28,6 +29,16 @@ namespace ShopGame.Crafting_Pages
             this.player = player;
         }
 
+        public virtual void Draw(SpriteBatch spriteBatch)
+        {
+            spriteBatch.Draw(this.Texture, new Rectangle((int)this.Location.X, (int)this.Location.Y, (int)this.Texture.Width, (int)this.Texture.Height), null, Color.White, MathHelper.ToRadians(Rotate), new Vector2(0, 0), SpriteEffects.None, 0);
+        }
+        public override void Draw(GameTime gameTime)
+        {
+            sb.Begin();
+            this.Draw(sb);
+            sb.End();
+        }
         protected override void LoadContent()
         {
             base.LoadContent();

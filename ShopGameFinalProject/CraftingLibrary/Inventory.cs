@@ -1,4 +1,4 @@
-﻿using Crafting.Recipes;
+﻿using CraftingLibrary.Items.Interfaces.Final_Items;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -8,12 +8,10 @@ namespace Crafting
     public class Inventory
     {
         List<IItem> items;
-        int totalItems;
         int Size;
         public Inventory(int size)
         {
             items = new List<IItem>();
-            totalItems = 0;
             this.Size = size;
         }
         public virtual void Add(IItem item, int count)
@@ -23,22 +21,55 @@ namespace Crafting
                 Add(item);
             }
         }
+        public virtual void Add(Inventory inventory)
+        {
+            foreach (var item in inventory.GetInventory())
+            {
+                Add(item);
+            }
+        }
         public virtual void Add(IItem item)
         {
-            if(items.Count < Size)
+            if(items.Count < Size || Size == 0)
             {
                 items.Add(item);
             }
         }
-        protected virtual void Remove(IItem item)
+
+        public virtual List<IItem> GetInventory()
+        {
+            return items;
+        }
+
+        public virtual int NumberOfObjects(IItem item)
+        {
+            return items.Where(x => x.GetType() == item.GetType()).Count();
+        }
+
+        public virtual void Remove(IItem item)
         {
             items.Remove(item);
         }
-        public virtual bool CheckForItem(IItem item)
+        public virtual void Remove(List<IItem> otheritems)
         {
-            List<IItem> tempitems = items.Where(x => x.GetType() == item.GetType()).ToList();
-            int number = tempitems.Count();
-            if (number > 0)
+            List<IItem> itemsToRemove = new List<IItem>();
+            foreach(IItem item in otheritems)
+            {
+                if(CheckForItem(item,1))
+                {
+                    itemsToRemove.Add(items.Where(x => x.GetType() == item.GetType()).FirstOrDefault());
+                }
+            }
+            foreach(IItem item in itemsToRemove)
+            {
+                items.Remove(item);
+            }
+            itemsToRemove.Clear();
+        }
+        public virtual bool CheckForItem(IItem item, int objectCount)
+        {
+            int number = NumberOfObjects(item);
+            if (number >= objectCount )
             {
                 return true;
             }
