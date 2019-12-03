@@ -24,16 +24,10 @@ namespace ShopGameFinalProject
             graphics = new GraphicsDeviceManager(this);
             this.IsMouseVisible = true;
             Content.RootDirectory = "Content";
-            PlayerManager playerManager = new PlayerManager(this);
+            WorldManager world = new WorldManager(this);
+            this.Components.Add(world);
             graphics.PreferredBackBufferWidth = width;
             graphics.PreferredBackBufferHeight = height;
-            this.Components.Add(playerManager);
-            FurnaceObject furnace = new FurnaceObject(this);
-            this.Components.Add(furnace);
-            CraftingTableObject table = new CraftingTableObject(this);
-            this.Components.Add(table);
-            WoodCuttingObject sawmill = new WoodCuttingObject(this);
-            this.Components.Add(sawmill);
         }
 
         /// <summary>

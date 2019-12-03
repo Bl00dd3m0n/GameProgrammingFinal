@@ -1,7 +1,7 @@
 ﻿using CraftingLibrary.Recipes;
 using System.Collections.Generic;
 
-namespace CraftingLibrary.Items.Interfaces.Final_Items
+namespace CraftingLibrary.Items.Interfaces
 {
     public interface ICraftable
     {

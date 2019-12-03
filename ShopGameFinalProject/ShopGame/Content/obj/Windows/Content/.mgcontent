@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<SourceFileCollection xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+  <Profile>Reach</Profile>
+  <Platform>Windows</Platform>
+  <Config />
+  <SourceFiles>
+    <File>C:/Users/Jonathan Taylor/Documents/GitHub/ShopGame/GameProgrammingFinal/ShopGameFinalProject/ShopGame/Content/Background.png</File>
+    <File>C:/Users/Jonathan Taylor/Documents/GitHub/ShopGame/GameProgrammingFinal/ShopGameFinalProject/ShopGame/Content/CraftingPage.png</File>
+    <File>C:/Users/Jonathan Taylor/Documents/GitHub/ShopGame/GameProgrammingFinal/ShopGameFinalProject/ShopGame/Content/CraftingTable.png</File>
+    <File>C:/Users/Jonathan Taylor/Documents/GitHub/ShopGame/GameProgrammingFinal/ShopGameFinalProject/ShopGame/Content/ExampleLayout.png</File>
+    <File>C:/Users/Jonathan Taylor/Documents/GitHub/ShopGame/GameProgrammingFinal/ShopGameFinalProject/ShopGame/Content/ExampleScene.png</File>
+    <File>C:/Users/Jonathan Taylor/Documents/GitHub/ShopGame/GameProgrammingFinal/ShopGameFinalProject/ShopGame/Content/Furnace.png</File>
+    <File>C:/Users/Jonathan Taylor/Documents/GitHub/ShopGame/GameProgrammingFinal/ShopGameFinalProject/ShopGame/Content/Player.png</File>
+    <File>C:/Users/Jonathan Taylor/Documents/GitHub/ShopGame/GameProgrammingFinal/ShopGameFinalProject/ShopGame/Content/Recipes.spritefont</File>
+    <File>C:/Users/Jonathan Taylor/Documents/GitHub/ShopGame/GameProgrammingFinal/ShopGameFinalProject/ShopGame/Content/Sawmill.png</File>
+    <File>C:/Users/Jonathan Taylor/Documents/GitHub/ShopGame/GameProgrammingFinal/ShopGameFinalProject/ShopGame/Content/ShopKeeper.png</File>
+  </SourceFiles>
+  <DestFiles>
+    <File xsi:nil="true" />
+    <File xsi:nil="true" />
+    <File xsi:nil="true" />
+    <File xsi:nil="true" />
+    <File xsi:nil="true" />
+    <File xsi:nil="true" />
+    <File xsi:nil="true" />
+    <File xsi:nil="true" />
+    <File xsi:nil="true" />
+    <File xsi:nil="true" />
+  </DestFiles>
+</SourceFileCollection>

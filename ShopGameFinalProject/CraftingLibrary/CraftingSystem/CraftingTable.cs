@@ -1,7 +1,7 @@
 ﻿using Crafting;
 using Crafting.Items;
 using CraftingLibrary.CraftingSystem;
-using CraftingLibrary.Items.Interfaces.Final_Items;
+using CraftingLibrary.Items.Interfaces;
 using CraftingLibrary.Recipes;
 using CraftingLibrary.Recipes.Crafting_Table;
 using System;

@@ -1,5 +1,6 @@
 ﻿using CraftingLibrary.CraftingSystem;
 using Microsoft.Xna.Framework;
+using ShopGame.Managers;
 using ShopGame.Pages;
 using ShopGameFinalProject.Managers;
 using System;
@@ -14,7 +15,7 @@ namespace ShopGame.GameSceneObjects
     {
         protected ScreenStateEnum page;
         public ScreenStateEnum Page { get { return page; } }
-        public CraftingObjects(Game game) : base(game)
+        public CraftingObjects(Game game, WorldManager manager) : base(game, manager)
         {
 
         }
@@ -29,23 +30,10 @@ namespace ShopGame.GameSceneObjects
 
         protected virtual void SetPosition(float xval)
         {
-            foreach (CollidableGameObject item in CollidableObjects)
+            if (world.ColliderCheck(this) != null)
             {
-                if (item.Texture != null)//This will ignore if the Asset hasn't been loaded yet
-                {
-                    MovePos(xval, item);
-                }
-            }
-        }
-        private void MovePos(float xval, CollidableGameObject item)
-        {
-            if (item != this)
-            {
-                if (this.CheckBoundaryCollision(item))
-                {
-                    Position += new Vector2(xval, 0);
-                    MovePos(xval, item);
-                }
+                Position += new Vector2(xval, 0);
+                SetPosition(xval);
             }
         }
     }

@@ -41,16 +41,25 @@
     <ApplicationManifest>app.manifest</ApplicationManifest>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="Economy\Store.cs" />
+    <Compile Include="Economy\Wallet.cs" />
+    <Compile Include="GameUI\Canvas.cs" />
+    <Compile Include="GameUI\Component.cs" />
+    <Compile Include="GameUI\Text.cs" />
+    <Compile Include="Managers\WorldManager.cs" />
+    <Compile Include="Pages\ShopCanvas.cs" />
+    <Compile Include="Pages\StorePage.cs" />
+    <Compile Include="Pages\GameCanvas.cs" />
     <Compile Include="Pages\MonoGameInventory.cs" />
     <Compile Include="GameSceneObjects\CraftingTableObject.cs" />
     <Compile Include="GameSceneObjects\WoodCuttingObject.cs" />
     <Compile Include="Pages\MonoGamePage.cs" />
-    <Compile Include="User Input Code\Button.cs" />
-    <Compile Include="Pages\MonoGameCarpentryStation.cs" />
-    <Compile Include="Pages\MonogameCraftingTable.cs" />
-    <Compile Include="Pages\ICraftingInterface.cs" />
-    <Compile Include="Pages\MonoGameCrafting.cs" />
-    <Compile Include="Pages\MonoGameFurnace.cs" />
+    <Compile Include="GameUI\Button.cs" />
+    <Compile Include="Pages\Crafting Pages\MonoGameCarpentryStation.cs" />
+    <Compile Include="Pages\Crafting Pages\MonogameCraftingTable.cs" />
+    <Compile Include="Pages\Crafting Pages\ICraftingInterface.cs" />
+    <Compile Include="Pages\Crafting Pages\MonoGameCrafting.cs" />
+    <Compile Include="Pages\Crafting Pages\MonoGameFurnace.cs" />
     <Compile Include="Pages\GameScreen.cs" />
     <Compile Include="GameSceneObjects\CraftingObjects.cs" />
     <Compile Include="GameSceneObjects\FurnaceObject.cs" />
@@ -61,8 +70,8 @@
     <Compile Include="GameSceneObjects\CollidableGameObject.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="User Input Code\RecipeMenuButton.cs" />
-    <Compile Include="User Input Code\ItemButton.cs" />
+    <Compile Include="GameUI\RecipeMenuButton.cs" />
+    <Compile Include="GameUI\ItemButton.cs" />
     <Compile Include="GameSceneObjects\ShopKeeper.cs" />
     <Compile Include="TextManager.cs" />
     <Compile Include="Util.cs" />
@@ -81,7 +90,6 @@
     <MonoGameContentReference Include="Content\Content.mgcb" />
     <None Include="app.manifest" />
   </ItemGroup>
-  <ItemGroup />
   <ItemGroup>
     <ProjectReference Include="..\CraftingLibrary\CraftingLibrary.csproj">
       <Project>{35815c19-f0ff-480d-a90d-9d4320c46168}</Project>

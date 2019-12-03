@@ -29,23 +29,23 @@ namespace ShopGame
             Color[] flipped = new Color[(textureToFlip.Width) * textureToFlip.Height];
             textureToFlip.GetData(colors1D);
             float[,] reflectionMatrix = GenerateReflectionMatrix(3);
-            for(float y = 0; y < textureToFlip.Height; y++)
+            for (float y = 0; y < textureToFlip.Height; y++)
             {
-                for(float x = 0; x < textureToFlip.Width;x++)
+                for (float x = 0; x < textureToFlip.Width; x++)
                 {
                     float point = (x) + (textureToFlip.Width) * y;
-                    Vector2 newPos = calculateNewPos(x,y,reflectionMatrix,textureToFlip.Width);
+                    Vector2 newPos = calculateNewPos(x, y, reflectionMatrix, textureToFlip.Width);
                     //flipped[Convert.ToInt32(point)] = colors1D[Convert.ToInt32(point)];
                     if ((int)newPos.Y != 0)
                     {
                         if ((int)newPos.X * (int)newPos.Y != 0)
                         {
                             float reflectedpoint = (newPos.X) + (textureToFlip.Width) * newPos.Y;
-                            flipped[Convert.ToInt32(point)] = colors1D[Convert.ToInt32(reflectedpoint)-1];
+                            flipped[Convert.ToInt32(point)] = colors1D[Convert.ToInt32(reflectedpoint) - 1];
                         }
                     }
                 }
-                }
+            }
             Texture2D newTexture = new Texture2D(textureToFlip.GraphicsDevice, textureToFlip.Width, textureToFlip.Height);
             newTexture.SetData(0, new Rectangle(0, 0, width, height), flipped, 0, textureToFlip.Width*textureToFlip.Height);
             return newTexture;

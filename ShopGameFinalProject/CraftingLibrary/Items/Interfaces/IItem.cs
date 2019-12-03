@@ -2,11 +2,11 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace CraftingLibrary.Items.Interfaces.Final_Items
+namespace CraftingLibrary.Items.Interfaces
 {
     public interface IItem
     {
         string Name { get; }
-        int Price { get; }
+        float Price { get; set; }
     }
 }

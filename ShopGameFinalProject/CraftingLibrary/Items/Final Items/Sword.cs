@@ -1,4 +1,4 @@
-﻿using CraftingLibrary.Items.Interfaces.Final_Items;
+﻿using CraftingLibrary.Items.Interfaces;
 using CraftingLibrary.Recipes;
 using System;
 using System.Collections.Generic;
@@ -10,7 +10,7 @@ namespace CraftingLibrary.Final_Items.Items
     {
         public string Name { get; set; }
 
-        public int Price { get; set; }
+        public float Price { get; set; }
 
         public Recipe itemRecipe { get; set; }
 

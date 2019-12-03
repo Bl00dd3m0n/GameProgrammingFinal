@@ -1,8 +1,9 @@
 ﻿using Crafting;
 using Crafting.Items;
-using CraftingLibrary.Items.Interfaces.Final_Items;
+using CraftingLibrary.Items.Interfaces;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 
 namespace CraftingLibrary.Recipes
@@ -45,6 +46,7 @@ namespace CraftingLibrary.Recipes
                     index++;
                 }
             }
+            RecipeItems = RecipeItems.Distinct().ToList();//Only need to see one of each object in the list because it shows the number of objects.
             return canCraft;
         }
     }

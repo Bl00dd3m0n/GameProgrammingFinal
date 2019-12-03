@@ -1,8 +1,10 @@
 ﻿using Crafting;
 using Crafting.Items;
 using CraftingLibrary.Items.CraftingMaterials;
+using EconomyLibrary;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using ShopGame.Managers;
 using ShopGame.Pages;
 using ShopGameFinalProject.Managers;
 using System;
@@ -21,9 +23,13 @@ namespace ShopGame.GameSceneObjects
         protected InputHandler input;
         ScreenManager screen;
         public ScreenManager Screen { get { return screen; } }
+
+        public string Hint { get; internal set; }
+
         public Vector2 CursorPosition;
         public bool CursorDown;
-        public ShopKeeper(Game game) : base(game)
+        public Wallet wallet;
+        public ShopKeeper(Game game, WorldManager world) : base(game, world)
         {
             inventory = new Inventory(300);
             input = new InputHandler(game,this);
@@ -33,8 +39,7 @@ namespace ShopGame.GameSceneObjects
             CursorPosition = new Vector2(0, 0);
             CursorDown = false;
             game.Components.Add(input);
-            inventory.Add(new Iron_Ore(), 24);
-            inventory.Add(new Logs(), 4);
+            wallet = new Wallet(300);
             TextureName = "ShopKeeper";
         }
 
@@ -54,15 +59,10 @@ namespace ShopGame.GameSceneObjects
         }
         public void OpenScene()
         {
-            foreach(var Objects in CollidableGameObject.CollidableObjects)
+            CollidableGameObject collider = world.ColliderCheck(this);
+            if (collider != null && collider.GetType().BaseType == typeof(CraftingObjects))
             {
-                if(Objects.GetType().BaseType == typeof(CraftingObjects))//Posibly handle this better
-                {
-                    if (this.CheckBoundaryCollision(Objects))
-                    {
-                        screen.ChangeScene(((CraftingObjects)Objects).Page);
-                    }
-                }
+                screen.ScreenState = ((CraftingObjects)collider).Page;
             }
         }
 
@@ -101,6 +101,13 @@ namespace ShopGame.GameSceneObjects
             if(Direction != new Vector2(0, 0))
             {
                 this.Position += Direction * speed * gameTime.ElapsedGameTime.Milliseconds / 1000;
+                if(world.ColliderCheck(this) is CraftingObjects)
+                {
+                    Hint = "Press F to open crafting object";
+                } else
+                {
+                    Hint = "";
+                }
             }
         }
     }

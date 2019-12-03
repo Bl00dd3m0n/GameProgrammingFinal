@@ -12,32 +12,30 @@ namespace ShopGame.Managers
 {
     class PlayerManager : DrawableGameComponent
     {
-        ShopKeeper player;
+        public ShopKeeper player { get; private set; }
         float speed;
         SpriteBatch spriteBatch;
-        public PlayerManager(Game game) : base(game)
+        WorldManager world;
+        public PlayerManager(Game game, WorldManager world) : base(game)
         {
-
+            this.world = world;
+            player = new ShopKeeper(Game, world);
         }
         public override void Update(GameTime gameTime)
         {
-
             player.Update(gameTime);
-
             base.Update(gameTime);
         }
         protected override void LoadContent()
         {
             speed = 500;       
-            player = new ShopKeeper(Game);
-            player.Initialize();
             spriteBatch = new SpriteBatch(this.GraphicsDevice);
-
+            player.Initialize();
             base.LoadContent();
         }
         public void MovePlayer(GameTime gameTime,ShopKeeper player)
         {
-                player.Move(speed,gameTime);
+            player.Move(speed,gameTime);
         }
 
         public override void Draw(GameTime gameTime)

@@ -1,4 +1,4 @@
-﻿using CraftingLibrary.Items.Interfaces.Final_Items;
+﻿using CraftingLibrary.Items.Interfaces;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -11,7 +11,7 @@ namespace CraftingLibrary.Items.CraftingMaterials
     {
         public string Name { get; set; }
 
-        public int Price { get; set; }
+        public float Price { get; set; }
 
         public Logs()
         {

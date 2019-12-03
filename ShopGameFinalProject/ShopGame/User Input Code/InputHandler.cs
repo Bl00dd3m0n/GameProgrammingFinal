@@ -197,14 +197,6 @@ namespace ShopGame
         public void GetPlayerMovement()
         {
             handler.Direction = new Vector2(0, 0);
-            if(KeyDown(Up))
-            {
-                handler.Direction.Y -= 1;
-            }
-            if (KeyDown(Down))
-            {
-                handler.Direction.Y += 1;
-            }
             if (KeyDown(Left))
             {
                 handler.Direction.X -= 1;

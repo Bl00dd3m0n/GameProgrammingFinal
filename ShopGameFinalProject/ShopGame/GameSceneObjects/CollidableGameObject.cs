@@ -1,6 +1,7 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using ShopGame.GameSceneObjects;
+using ShopGame.Managers;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -19,9 +20,9 @@ namespace ShopGame
         public Vector2 Position { get; protected set; }
         public Vector2 Direction;
         protected bool canDraw;
-        protected static List<CollidableGameObject> CollidableObjects;
+        protected WorldManager world;
         public static ShopKeeper shopkeeper;//NOTE Not the way to do this but I ran out of time
-        public CollidableGameObject(Game game) : base(game)
+        public CollidableGameObject(Game game, WorldManager world) : base(game)
         {
             Rotation = 0;
             if(shopkeeper == null)
@@ -31,13 +32,13 @@ namespace ShopGame
                     shopkeeper = (ShopKeeper)this;
                 }
             }
-            if(CollidableGameObject.CollidableObjects == null)
-            {
-                CollidableObjects = new List<CollidableGameObject>();
-            }
             Position = new Vector2(0, 0);
             Direction = new Vector2(0, 0);
-            CollidableObjects.Add(this);
+            this.world = world;
+        }
+        public override void Initialize()
+        {
+            base.Initialize();
         }
         public override void Draw(GameTime gameTime)
         {
@@ -55,6 +56,11 @@ namespace ShopGame
             this.Draw(spriteBatch);
             spriteBatch.End();
             base.Draw(gameTime);
+        }
+        public void UpdateBoundariesPos()
+        {
+            boundaries.X = (int)Position.X;
+            boundaries.Y = (int)Position.Y;
         }
         public virtual void Draw(SpriteBatch spriteBatch)
         {
@@ -79,11 +85,10 @@ namespace ShopGame
         public bool CheckBoundaryCollision(CollidableGameObject CollidingWith)
         {
             //Looking for a better way to do this, however, for a temporary solution
-            bool returnValue = ((CollidingWith.Position.X <= this.Position.X + this.Texture.Width 
-                && CollidingWith.Position.X >= this.Position.X) 
-                || (CollidingWith.Position.X >= this.Position.X
-                && CollidingWith.Texture.Width + CollidingWith.Position.X <= CollidingWith.Position.X)//If the collider is within a collidableObject
-                );
+            bool returnValue = ((CollidingWith.boundaries.Left <= this.boundaries.Right
+                && this.boundaries.Left <= CollidingWith.boundaries.Right) //If the collider is within a collidableObject
+                || (CollidingWith.boundaries.Left >= this.boundaries.Right
+                && this.boundaries.Left >= CollidingWith.boundaries.Right));
             return returnValue;
         }
     }

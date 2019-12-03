@@ -16,10 +16,11 @@ namespace ShopGame.Pages
         SpriteBatch spriteBatch;
         public MonoGameInventory(Game game, ShopKeeper player, ScreenManager screen) : base(game, player)
         {
+            this.canvas = new PageCanvas(game,this.GetType().Name);
             this.screen = screen;
-            items = new ItemsButtons[player.inventory.GetInventory().Count];
+            canvas.items = new ItemsButtons[player.inventory.GetInventory().Count];
             this.spriteBatch = sb;
-            SetButtons();
+            canvas.SetButtons(player.inventory);
         }
     }
 }

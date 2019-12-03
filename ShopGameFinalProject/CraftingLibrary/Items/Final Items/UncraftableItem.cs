@@ -1,4 +1,4 @@
-﻿using CraftingLibrary.Items.Interfaces.Final_Items;
+﻿using CraftingLibrary.Items.Interfaces;
 using CraftingLibrary.Recipes;
 using System;
 using System.Collections.Generic;
@@ -10,7 +10,7 @@ namespace Crafting.Items
     {
         public string Name => throw new NotImplementedException();
 
-        public int Price => throw new NotImplementedException();
+        public float Price { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
 
         public Recipe itemRecipe { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
     }

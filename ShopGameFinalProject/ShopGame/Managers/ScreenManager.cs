@@ -10,17 +10,21 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using ShopGame.GameUI;
+using ShopGame.Pages.Crafting_Pages;
 
 namespace ShopGameFinalProject.Managers
 {
-    public enum ScreenStateEnum { Smelting, Woodcutting, Crafting, Game, Inventory}
+    public enum ScreenStateEnum { Smelting, Woodcutting, Crafting, Game, Inventory,
+        Shop
+    }
     
     class ScreenManager : DrawableGameComponent
     {
         ScreenStateEnum screenState;
         ScreenStateEnum prevScreenState;
         public GameScreen screen;
-
+        
 
         SpriteBatch spriteBatch;
         public ScreenStateEnum ScreenState { get { return screenState; } set { screenState = value; } }
@@ -32,7 +36,7 @@ namespace ShopGameFinalProject.Managers
         {
             screenState = ScreenStateEnum.Game;
             this.player = player;
-            exitButton = new Button(Game);
+            exitButton = new Button(Game,"exit");
             exit = ExitScreen;
         }
         bool ShowExit;//These should be unique to Draw
@@ -61,24 +65,22 @@ namespace ShopGameFinalProject.Managers
                     }
                     if (screenState == ScreenStateEnum.Crafting)
                     {
-                        screen = new MonogameCraftingTable(Game, player, spriteBatch,this);
+                        screen = new MonogameCraftingTable(Game, player, spriteBatch);
                     }
                     else if (screenState == ScreenStateEnum.Woodcutting)
                     {
-                        screen = new MonoGameCarpentryStation(Game, player, spriteBatch, this);
+                        screen = new MonoGameCarpentryStation(Game, player, spriteBatch);
                     }
                     else if (screenState == ScreenStateEnum.Smelting)
                     {
-                        screen = new MonoGameFurnace(Game, player, spriteBatch, this);
+                        screen = new MonoGameFurnace(Game, player, spriteBatch);
+                    } else if(screenState == ScreenStateEnum.Shop)
+                    {
+                        screen = new StorePage(Game,player);
                     }
                     screen.ChangeTexture("CraftingPage");
                 }
                 prevScreenState = screenState;
-            }
-            if(ShowExit)
-            {
-                Vector2 corner = new Vector2(Game.GraphicsDevice.Viewport.Width - font.MeasureString("Exit").X - 10, 0);
-                exitButton.Draw(gameTime, spriteBatch, font, "Exit", corner, Color.Red);
             }
             screen.Initialize();
             screen.Draw(gameTime);
@@ -112,9 +114,6 @@ namespace ShopGameFinalProject.Managers
         protected override void LoadContent()
         {
             spriteBatch = new SpriteBatch(this.GraphicsDevice);
-            screen = new GameScreen(Game,player);
-            screen.Initialize();
-            screen.Location = new Vector2(0, 0);
             font = this.Game.Content.Load<SpriteFont>("Recipes");
             base.LoadContent();
         }

@@ -1,6 +1,6 @@
 ﻿using Crafting;
 using Crafting.Items;
-using CraftingLibrary.Items.Interfaces.Final_Items;
+using CraftingLibrary.Items.Interfaces;
 using CraftingLibrary.Recipes;
 using System;
 using System.Collections.Generic;

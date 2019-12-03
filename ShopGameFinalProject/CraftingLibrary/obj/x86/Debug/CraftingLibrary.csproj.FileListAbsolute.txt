@@ -1,0 +1,6 @@
+C:\Users\Jonathan Taylor\Documents\GitHub\ShopGame\GameProgrammingFinal\ShopGameFinalProject\CraftingLibrary\obj\x86\Debug\CraftingLibrary.csprojAssemblyReference.cache
+C:\Users\Jonathan Taylor\Documents\GitHub\ShopGame\GameProgrammingFinal\ShopGameFinalProject\CraftingLibrary\obj\x86\Debug\CraftingLibrary.csproj.CoreCompileInputs.cache
+C:\Users\Jonathan Taylor\Documents\GitHub\ShopGame\GameProgrammingFinal\ShopGameFinalProject\CraftingLibrary\bin\Windows\x86\Debug\CraftingLibrary.exe
+C:\Users\Jonathan Taylor\Documents\GitHub\ShopGame\GameProgrammingFinal\ShopGameFinalProject\CraftingLibrary\bin\Windows\x86\Debug\CraftingLibrary.pdb
+C:\Users\Jonathan Taylor\Documents\GitHub\ShopGame\GameProgrammingFinal\ShopGameFinalProject\CraftingLibrary\obj\x86\Debug\CraftingLibrary.exe
+C:\Users\Jonathan Taylor\Documents\GitHub\ShopGame\GameProgrammingFinal\ShopGameFinalProject\CraftingLibrary\obj\x86\Debug\CraftingLibrary.pdb
