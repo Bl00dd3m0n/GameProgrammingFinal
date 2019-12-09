@@ -15,21 +15,7 @@ using System.Threading.Tasks;
 
 namespace ShopGame.Pages
 {
-    class CraftingCanvas : PageCanvas
-    {
-        
-        public CraftingCanvas(Game game, string title) : base(game, title)
-        {
-        }
-        public Button AddButton(IItem item, Button.Action action, Vector2 position)
-        {
-            RecipeButtons rb = new RecipeButtons(Game, item, ((ICraftable)item).itemRecipe);
-            rb.CreateButton(item.Name, position, Color.Magenta, Color.Black);
-            Components.Add(rb);
-            rb.delegatedMethod = action;
-            return rb;
-        }
-    }
+
     class MonoGameCrafting : MonoGamePage
     {
         protected TemplateCraftingSystem crafting;

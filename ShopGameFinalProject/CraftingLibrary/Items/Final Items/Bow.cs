@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace CraftingLibrary.Items.Final_Items
 {
-    internal class Bow : IItem, ICraftable
+    public class Bow : IItem, ICraftable
     {
         public string Name { get; set; }
 

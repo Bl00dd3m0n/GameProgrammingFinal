@@ -1,0 +1,7 @@
+C:\Users\Jonathan Taylor\Documents\GitHub\ShopGame\GameProgrammingFinal\ShopGameFinalProject\EconomyLibrary\bin\Windows\x86\Release\CraftingLibrary.exe
+C:\Users\Jonathan Taylor\Documents\GitHub\ShopGame\GameProgrammingFinal\ShopGameFinalProject\EconomyLibrary\bin\Windows\x86\Release\CraftingLibrary.pdb
+C:\Users\Jonathan Taylor\Documents\GitHub\ShopGame\GameProgrammingFinal\ShopGameFinalProject\EconomyLibrary\obj\x86\Release\EconomyLibrary.csprojAssemblyReference.cache
+C:\Users\Jonathan Taylor\Documents\GitHub\ShopGame\GameProgrammingFinal\ShopGameFinalProject\EconomyLibrary\obj\x86\Release\EconomyLibrary.csproj.CoreCompileInputs.cache
+C:\Users\Jonathan Taylor\Documents\GitHub\ShopGame\GameProgrammingFinal\ShopGameFinalProject\EconomyLibrary\obj\x86\Release\EconomyLibrary.csproj.CopyComplete
+C:\Users\Jonathan Taylor\Documents\GitHub\ShopGame\GameProgrammingFinal\ShopGameFinalProject\EconomyLibrary\obj\x86\Release\CraftingLibrary.exe
+C:\Users\Jonathan Taylor\Documents\GitHub\ShopGame\GameProgrammingFinal\ShopGameFinalProject\EconomyLibrary\obj\x86\Release\CraftingLibrary.pdb

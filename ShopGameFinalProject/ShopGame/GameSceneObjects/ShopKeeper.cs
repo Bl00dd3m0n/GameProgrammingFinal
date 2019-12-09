@@ -1,6 +1,8 @@
 ﻿using Crafting;
 using Crafting.Items;
+using CraftingLibrary.Final_Items.Items;
 using CraftingLibrary.Items.CraftingMaterials;
+using CraftingLibrary.Items.Final_Items;
 using EconomyLibrary;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
@@ -25,16 +27,22 @@ namespace ShopGame.GameSceneObjects
         public ScreenManager Screen { get { return screen; } }
 
         public string Hint { get; internal set; }
+        public Inventory PurchaseableItems { get; internal set; }
 
         public Vector2 CursorPosition;
         public bool CursorDown;
         public Wallet wallet;
+        int timer;
+        int NewItemTimer;
         public ShopKeeper(Game game, WorldManager world) : base(game, world)
         {
+            timer = 0;
+            NewItemTimer = 10000;// 10 seconds
             inventory = new Inventory(300);
             input = new InputHandler(game,this);
             this.screen = new ScreenManager(game, this);
             this.screen.Initialize();
+            PurchaseableItems = new Inventory(0);
             //game.Components.Add(screen);
             CursorPosition = new Vector2(0, 0);
             CursorDown = false;
@@ -84,6 +92,23 @@ namespace ShopGame.GameSceneObjects
         }
         public override void Update(GameTime gameTime)
         {
+            timer += gameTime.ElapsedGameTime.Milliseconds;
+            if(timer >= NewItemTimer)
+            {
+                timer = 0;
+                Random ran = new Random();
+                int num = ran.Next(1,3);
+                switch(num)
+                {
+                    case 1:
+                        PurchaseableItems.Add(new Sword());
+                        break;
+                    case 2:
+                        PurchaseableItems.Add(new Bow());
+                        break;
+                }
+                
+            }
             screen.Update(gameTime);
             boundaries.X = (int)Position.X;
             boundaries.Y = (int)Position.Y;

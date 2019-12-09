@@ -41,15 +41,19 @@
     <ApplicationManifest>app.manifest</ApplicationManifest>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="Pages\CanvasPages\BuyPage.cs" />
+    <Compile Include="Pages\Stores\BuyShop.cs" />
+    <Compile Include="Pages\CanvasPages\CraftingCanvas.cs" />
     <Compile Include="Economy\Store.cs" />
     <Compile Include="Economy\Wallet.cs" />
     <Compile Include="GameUI\Canvas.cs" />
     <Compile Include="GameUI\Component.cs" />
     <Compile Include="GameUI\Text.cs" />
     <Compile Include="Managers\WorldManager.cs" />
-    <Compile Include="Pages\ShopCanvas.cs" />
-    <Compile Include="Pages\StorePage.cs" />
-    <Compile Include="Pages\GameCanvas.cs" />
+    <Compile Include="Pages\CanvasPages\PageCanvas.cs" />
+    <Compile Include="Pages\CanvasPages\ShopCanvas.cs" />
+    <Compile Include="Pages\Stores\PlayerStorePage.cs" />
+    <Compile Include="Pages\CanvasPages\GameCanvas.cs" />
     <Compile Include="Pages\MonoGameInventory.cs" />
     <Compile Include="GameSceneObjects\CraftingTableObject.cs" />
     <Compile Include="GameSceneObjects\WoodCuttingObject.cs" />

@@ -7,6 +7,7 @@ using Crafting;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using ShopGame.GameSceneObjects;
+using ShopGame.Pages.CanvasPages;
 using ShopGameFinalProject.Managers;
 
 namespace ShopGame.Pages

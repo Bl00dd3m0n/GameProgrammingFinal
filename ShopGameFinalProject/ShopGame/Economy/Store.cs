@@ -7,7 +7,7 @@ using Crafting;
 using CraftingLibrary.Items.Interfaces;
 namespace EconomyLibrary
 {
-    class Store
+    public class Store
     {
         Inventory itemsToSell;
         public Inventory ItemsToSell { get { return itemsToSell; } }
@@ -22,38 +22,49 @@ namespace EconomyLibrary
             itemsToSell = new Inventory(0);
             storeWallet = new Wallet(StartingBalance);
         }
-        public bool Buy(IItem item, Inventory PurchaseInventory, Wallet purchaseWallet)
+        /// <summary>
+        /// Used for the player to buy items
+        /// </summary>
+        /// <param name="item"> the item to sell </param>
+        /// <param name="BuyersInventory"> Players inventory - used to add to</param>
+        /// <param name="purchaseWallet">Players walllet used to remove money</param>
+        /// <returns></returns>
+        public bool Sell(IItem item, Inventory BuyersInventory, Wallet purchaseWallet)
         {
             if (itemsToSell.CheckForItem(item, 1))
             {
                 if (purchaseWallet.Withdraw(item.Price))
                 {
                     itemsToSell.Remove(item);
-                    PurchaseInventory.Add(item);
+                    BuyersInventory.Add(item);
                     return true;
                 }
             }
             return false;
         }
-        public bool Sell(IItem item, Inventory PurchaseInventory)
+        /// <summary>
+        /// Used to sell items to the shop
+        /// </summary>
+        /// <param name="item"></param>
+        /// <param name="PurchaseInventory"></param>
+        /// <returns></returns>
+        public bool Buy(IItem item, Inventory PurchaseInventory, Wallet sellerWallet)
         {
-            if (storeWallet.Withdraw(item.Price))
+            if (PurchaseInventory.CheckForItem(item, 1))
             {
-                if (PurchaseInventory.CheckForItem(item, 1))
-                {
-                    PurchaseInventory.Remove(item);
-                    itemsToSell.Add(item);
-                    return true;
-                }
+                PurchaseInventory.Remove(item);
+                itemsToSell.Add(item);
+                sellerWallet.Inject(item.Price);
+                return true;
             }
             return false;
         }
-        public bool Sell(IItem item, Inventory PurchaseInventory, int sellCount)
+        public bool Buy(IItem item, Inventory PurchaseInventory, int sellCount, Wallet sellerWallet)
         {
             bool sold = true;
             for (int i = 0; i < sellCount; i++)
             {
-                sold = Sell(item, PurchaseInventory);
+                sold = Buy(item, PurchaseInventory, sellerWallet);
                 if (!sold) break;
             }
             return sold;

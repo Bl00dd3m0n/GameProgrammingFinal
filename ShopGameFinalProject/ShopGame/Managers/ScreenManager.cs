@@ -15,9 +15,7 @@ using ShopGame.Pages.Crafting_Pages;
 
 namespace ShopGameFinalProject.Managers
 {
-    public enum ScreenStateEnum { Smelting, Woodcutting, Crafting, Game, Inventory,
-        Shop
-    }
+    public enum ScreenStateEnum { Smelting, Woodcutting, Crafting, Game, Inventory, Shop,  BuyShop}
     
     class ScreenManager : DrawableGameComponent
     {
@@ -30,14 +28,11 @@ namespace ShopGameFinalProject.Managers
         public ScreenStateEnum ScreenState { get { return screenState; } set { screenState = value; } }
         ShopKeeper player;
         Button exitButton;
-        Button.Action exit;
         SpriteFont font;
         public ScreenManager(Game game, ShopKeeper player) : base(game)
         {
             screenState = ScreenStateEnum.Game;
             this.player = player;
-            exitButton = new Button(Game,"exit");
-            exit = ExitScreen;
         }
         bool ShowExit;//These should be unique to Draw
         /// <summary>
@@ -78,6 +73,10 @@ namespace ShopGameFinalProject.Managers
                     {
                         screen = new StorePage(Game,player);
                     }
+                    else if (screenState == ScreenStateEnum.BuyShop)
+                    {
+                        screen = new BuyShop(Game, player,player.PurchaseableItems);
+                    }
                     screen.ChangeTexture("CraftingPage");
                 }
                 prevScreenState = screenState;
@@ -93,10 +92,6 @@ namespace ShopGameFinalProject.Managers
             this.screenState = screen;
         }
 
-        void ExitScreen() 
-        {
-            screenState = ScreenStateEnum.Game;
-        }
         public override void Initialize()
         {
             base.Initialize();
@@ -104,10 +99,6 @@ namespace ShopGameFinalProject.Managers
 
         public override void Update(GameTime gameTime)
         {
-            if(player.CursorDown && exitButton.Contains(player.CursorPosition.ToPoint()))
-            {
-                screenState = ScreenStateEnum.Game;
-            }
             base.Update(gameTime);
         }
 

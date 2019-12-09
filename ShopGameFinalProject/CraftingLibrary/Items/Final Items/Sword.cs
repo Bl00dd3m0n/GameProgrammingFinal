@@ -6,7 +6,7 @@ using System.Text;
 
 namespace CraftingLibrary.Final_Items.Items
 {
-    class Sword : IItem, ICraftable
+    public class Sword : IItem, ICraftable
     {
         public string Name { get; set; }
 
