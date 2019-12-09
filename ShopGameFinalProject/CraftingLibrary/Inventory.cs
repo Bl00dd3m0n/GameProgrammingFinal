@@ -21,6 +21,10 @@ namespace Crafting
                 Add(item);
             }
         }
+        public virtual int Count()
+        {
+            return items.Count;
+        }
         public virtual void Add(Inventory inventory)
         {
             foreach (var item in inventory.GetInventory())

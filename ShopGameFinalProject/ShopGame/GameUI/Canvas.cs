@@ -14,7 +14,7 @@ namespace ShopGame.GameUI
         public bool enabled;
         public Canvas(Game game) : base(game)
         {
-            enabled = false;
+            enabled = true;
             Components = new List<Component>();
         }
         public virtual void Draw(GameTime gameTime,SpriteBatch spriteBatch)

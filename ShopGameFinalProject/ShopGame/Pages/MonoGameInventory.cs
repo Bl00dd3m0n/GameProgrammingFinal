@@ -18,9 +18,7 @@ namespace ShopGame.Pages
         {
             this.canvas = new PageCanvas(game,this.GetType().Name);
             this.screen = screen;
-            canvas.items = new ItemsButtons[player.inventory.GetInventory().Count];
             this.spriteBatch = sb;
-            canvas.SetButtons(player.inventory);
         }
     }
 }

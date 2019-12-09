@@ -15,34 +15,43 @@ namespace ShopGame.Pages.Crafting_Pages
     class StorePage : MonoGamePage
     {
         public Store store;
-        ShopCanvas shopCanvas;
         public StorePage(Game game, ShopKeeper player) : base(game, player)
         {
             store = new Store();
             store.ItemsToSell.Add(new Iron_Ore(), 25);
             store.ItemsToSell.Add(new Logs(), 25);
-            shopCanvas = new ShopCanvas(game, this.GetType().Name);
-            PopulateStore();
         }
+
+        public override void SetUpCanvas()
+        {
+            canvas = new ShopCanvas(game, this.GetType().Name);
+            canvas.Initialize();
+        }
+
         public override void Draw(GameTime gameTime)
         {
-
-            if(player.CursorDown)
-            {
-                shopCanvas.CheckButton = true;
-                shopCanvas.PositionCheck = player.CursorPosition.ToPoint();
-            }
-            if (shopCanvas.PurchaseItem)
+            if (((ShopCanvas)canvas).PurchaseItem)
                 PurchaseItem();
             base.Draw(gameTime);
-            shopCanvas.Draw(gameTime, sb);
+            canvas.Draw(gameTime, sb);
         }
 
         public void PurchaseItem()
         {
-            store.Buy(shopCanvas.selectedItem.item, player.inventory,player.wallet);
-            shopCanvas.Components.Remove(shopCanvas.selectedItem);
-            shopCanvas.PurchaseItem = false;
+            if (canvas.selectedItem.item.Price <= player.wallet.Balance)
+            {
+                foreach(var component in ((ShopCanvas)canvas).BuyableComponents)
+                {
+                    canvas.Components.Remove(component);
+                }foreach(var component in ((ShopCanvas)canvas).DisplayableComponents)
+                {
+                    canvas.Components.Remove(component);
+                }
+                store.Buy(canvas.selectedItem.item, player.inventory, player.wallet);
+                canvas.Components.Remove(canvas.selectedItem);
+                PopulateStore();
+                ((ShopCanvas)canvas).PurchaseItem = false;
+            }
         }
 
         public void PopulateStore()
@@ -55,7 +64,7 @@ namespace ShopGame.Pages.Crafting_Pages
                     price = 5;
                 else
                     price = 10;
-                shopCanvas.AddButton(item,price,new Vector2(20, (i+1) * 20));
+                ((ShopCanvas)canvas).BuyableComponents.Add(canvas.AddButton(item,price,new Vector2(20, (i+1) * 20)));
                 i++;
             }
         }

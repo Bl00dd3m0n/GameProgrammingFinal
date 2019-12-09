@@ -16,92 +16,106 @@ namespace ShopGame.Pages
 {
     class PageCanvas : Canvas
     {
-        internal ItemsButtons[] items;
-        internal List<Text> RecipeText;
-        internal Button pressedButton;
-        internal Button exitButton;
-        string screentitle;
+        public bool CheckButton;
+        public Point PositionCheck;
+        public ItemsButtons selectedItem;
+        internal List<Component> DisplayableComponents;
         public PageCanvas(Game game, string title) : base(game)
         {
-            this.screentitle = title;
-            RecipeText = new List<Text>();
-            exitButton = new Button(game,"Exit");
-            enabled = true;
+            CheckButton = false;
+            DisplayableComponents = new List<Component>();
         }
-        public void SetUpCanvas()
+
+        public virtual Text AddText(string text, Vector2 position, Color color)
         {
-            this.Components.AddRange(RecipeText);
-            this.Components.Add(pressedButton);
-            this.Components.AddRange(items);
-            this.enabled = true;
+            Text newText = new Text(Game);
+            newText.SetTextValues(text, position, color);
+            newText.enabled = true;
+            this.Components.Add(newText);
+            return newText;
         }
-        protected void AddEssentials()
+
+        public virtual Text AddTextWithColorCode(string text, Vector2 position)
         {
-            Vector2 corner = new Vector2(Game.GraphicsDevice.Viewport.Width - exitButton.buttonText.TextPositions("Exit").X - 10, 0);
-            exitButton.CreateButton("Exit", corner, Color.Red, Color.Black);
-            this.Components.Add(exitButton);
-            Text title = new Text(Game);
-            title.SetTextValues($"{screentitle}", new Vector2(this.GraphicsDevice.Viewport.Width / 2, 0), Color.White);
-            title.enabled = true;
-            this.Components.Add(title);
-        }
-        public virtual void CreateButtons(Inventory someInventory)
-        {
-            for (int i = 0; i < items.Length; i++)
+            Text newText = new Text(Game);
+            string[] textWithColor = new string[4];
+            int a = 0;
+            for(int i = 0; i < text.Length;i++)
             {
-                items[i] = new ItemsButtons(Game, someInventory.GetInventory()[i]);
-                items[i].Initialize();
-                items[i].CreateButton(items[i].item.Name, items[i].position, Color.Magenta, Color.Black);
-                this.Components.Add(items[i]);
-            }
-        }
-        public virtual void ButtonListener(Button button, Button.Action buttonClicked, ShopKeeper player)
-        {
-            if (player.CursorDown)
-            {
-                if (button.Contains(player.CursorPosition.ToPoint()))
+                if(text[i] == ',')
                 {
-                    buttonClicked();
+                    a++;
+                } else
+                {
+                    textWithColor[a] += text[i];
                 }
             }
+
+            newText.SetTextValues(textWithColor[3], position, new Color(int.Parse(textWithColor[0]), int.Parse(textWithColor[1]),int.Parse(textWithColor[2])));
+            newText.enabled = true;
+            this.Components.Add(newText);
+            return newText;
         }
-        internal virtual void SetButtons(Inventory someInventory)
+
+        public override void Draw(GameTime gameTime, SpriteBatch spriteBatch)
         {
-            AddEssentials();
-            items = new ItemsButtons[someInventory.GetInventory().Count];
-        }
-        public bool TextWithColorCode(Recipe recipe)
-        {
-            foreach (Text text in RecipeText)
+            if (CheckButton)
             {
-                this.Components.Remove(text);
-            }
-            this.RecipeText.Clear();
-            foreach (var text in recipe.RecipeItems)
-            {
-                int wordCount = 0;
-                string[] words = new string[4];//RGB values + text
-                for (int i = 0; i < text.Length; i++)
+                foreach (Component component in Components)
                 {
-                    if (text[i] != ',')
+                    if (component is Button)
                     {
-                        words[wordCount] += text[i];
-                    }
-                    else
-                    {
-                        wordCount++;
+                        Button button = (Button)component;
+                        if (button.Contains(PositionCheck))
+                        {
+                            if (button.GetType() == typeof(ItemsButtons))
+                            {
+                                DisplayValues((ItemsButtons)button);
+                                selectedItem = (ItemsButtons)button;
+                            }
+                            else if (button.GetType() == typeof(RecipeButtons))
+                            {
+                                selectedItem = (RecipeButtons)button;
+                                button.delegatedMethod();
+                            }
+                            else
+                                button.delegatedMethod();
+                            CheckButton = false;
+                            break;
+                        }
                     }
                 }
-                Color color = new Color(Convert.ToUInt32(words[0]), Convert.ToUInt32(words[1]), Convert.ToUInt32(words[2]));
-                string ActualText = words[3];
-                Text newText = new Text(Game);
-                newText.SetTextValues(ActualText, new Vector2(this.GraphicsDevice.Viewport.Width / 4, (this.GraphicsDevice.Viewport.Height - (this.GraphicsDevice.Viewport.Height * 0.92f)) + newText.TextPositions(ActualText).Y * recipe.RecipeItems.IndexOf(text)), color);
-                newText.Initialize();
-                newText.enabled = true;
-                this.RecipeText.Add(newText);
             }
-            this.Components.AddRange(RecipeText);
-            return true;
+            base.Draw(gameTime, spriteBatch);
+        }
+        public virtual void DisplayValues(ItemsButtons button)
+        {
+            List<Component> temp = Components.Where(x => x.GetType() == typeof(Text)).ToList();
+            foreach (var item in temp)
+            {
+                Components.Remove(item);
+            }
+            temp.Clear();
+            selectedItem = button;
+            AddText($"Name: {button.item.Name}", new Vector2(this.GraphicsDevice.Viewport.Width / 4, Components.Where(x => x.GetType() == typeof(Text)).Count() * 20 + 20), Color.Black);
+            AddText($"Price: {button.item.Price}", new Vector2(this.GraphicsDevice.Viewport.Width / 4, Components.Where(x => x.GetType() == typeof(Text)).Count() * 20 + 20), Color.Black);
+        }
+
+        public virtual Button AddButton(IItem item, float price, Vector2 position)
+        {
+            item.Price = price;
+            ItemsButtons itemButton = new ItemsButtons(Game, item);
+            itemButton.CreateButton(item.Name, position, Color.Magenta, Color.Black);
+            this.Components.Add(itemButton);
+            return itemButton;
+        }
+        public virtual Button AddButton(string Message, Vector2 position, Button.Action Event, Color color)
+        {
+            Button itemButton = new Button(Game, Message);
+            itemButton.CreateButton(Message, position, color, Color.Black);
+            this.Components.Add(itemButton);
+            itemButton.delegatedMethod = Event;
+            return itemButton;
         }
     }
     class MonoGamePage : GameScreen
@@ -120,6 +134,7 @@ namespace ShopGame.Pages
         protected bool RecipeLoaded;
         public MonoGamePage(Game game, ShopKeeper player) : base(game, player)
         {
+            RenderRecipe = true;
             this.CraftablePage = false;
             this.Rotate = 0;
             this.game = game;
@@ -136,14 +151,16 @@ namespace ShopGame.Pages
         {
             spriteBatch.Draw(this.Texture, new Rectangle((int)this.Location.X, (int)this.Location.Y, (int)this.Texture.Width, (int)this.Texture.Height), null, Color.White, MathHelper.ToRadians(Rotate), new Vector2(0, 0), SpriteEffects.None, 0);
         }
-        public virtual void SetButtons()
-        {
-            canvas.SetButtons(someInventory);
-        }
-
         public virtual void CreateButtons()
         {
-            canvas.CreateButtons(someInventory);
+            if (canvas.Components.Count <= 0)
+            {
+                foreach (var item in someInventory.GetInventory())
+                {
+                    canvas.AddButton(item, item.Price, new Vector2(this.GraphicsDevice.Viewport.Width / 100, 50 + someInventory.GetInventory().IndexOf(item) * 20));
+                }
+            }
+             canvas.AddButton("Exit", new Vector2(this.GraphicsDevice.Viewport.Width - 50, 0), ExitScene, Color.Red);
         }
         public void ExitScene()
         {
@@ -154,25 +171,10 @@ namespace ShopGame.Pages
         {
 
             sb.Begin();
-            for (int i = 0; i < canvas.Components.Count; i++)
+            if (player.CursorDown)
             {
-
-                //TODO add recipe for inventory items
-                //if (items[i].item.GetType().GetInterface("ICraftable") != null)
-                //{
-                //    recipe = ((ICraftable)items[i].item).itemRecipe;
-                //}//This resets recipe for the crafting menus don't do this.
-                if (canvas.Components[i] is Button)
-                {
-                    if (((Button)canvas.Components[i]).buttonText.text == "Exit") ButtonPress = ExitScene;
-                    else ButtonPress = Nothing;
-                    canvas.ButtonListener(((Button)canvas.Components[i]), ButtonPress, player);
-                }
-                if (canvas.Components[i].GetType() == typeof(ItemsButtons))
-                {
-                    canvas.Components[i].position = new Vector2(marginx, (i + 1) * (((ItemsButtons)canvas.Components[i]).bounds.Height + marginy));//NOTE Since crafted items at the moment are only one object type using [0] should be fine, however, if you can craft multiple things possibly change this
-                    ((ItemsButtons)canvas.Components[i]).UpdateBoundaries(canvas.Components[i].position);
-                }
+                canvas.CheckButton = true;
+                canvas.PositionCheck = player.CursorPosition.ToPoint();
             }
             if (recipe != null)
             {
@@ -182,10 +184,6 @@ namespace ShopGame.Pages
 
             base.Draw(gameTime);
             canvas.Draw(gameTime, sb);
-        }
-        public void Nothing()
-        {
-
         }
         protected override void LoadContent()
         {
@@ -197,12 +195,7 @@ namespace ShopGame.Pages
             marginx = Texture.Width / 90;
             marginy = 20;
             SetUpCanvas();
-            SetButtons();
             CreateButtons();
-        }
-        protected virtual void NewButton(GameTime gameTime)
-        {
-        
         }
 
         protected virtual void DrawRecipe(GameTime gameTime, Recipe recipe)
@@ -210,8 +203,18 @@ namespace ShopGame.Pages
             if (RenderRecipe)
             {
                 if (!RecipeLoaded) {
-                    RecipeLoaded = canvas.TextWithColorCode(recipe);
+                    foreach(var component in canvas.DisplayableComponents)
+                    {
+                        canvas.Components.Remove(component);
+                    }
+                    canvas.DisplayableComponents.Clear();
+                    foreach(var textrecipe in recipe.RecipeItems)
+                    {
+                        canvas.DisplayableComponents.Add(canvas.AddTextWithColorCode(textrecipe,new Vector2(this.GraphicsDevice.Viewport.Width/4,50+(recipe.RecipeItems.IndexOf(textrecipe)*20))));
+                    }
                 }
+                RenderRecipe = false;
+                RecipeLoaded = true;
             }
         }
     }

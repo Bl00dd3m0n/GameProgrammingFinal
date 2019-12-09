@@ -21,56 +21,13 @@ namespace ShopGame.Pages
         public CraftingCanvas(Game game, string title) : base(game, title)
         {
         }
-        public void CreateButtons(Inventory someInventory, TemplateCraftingSystem crafting)
+        public Button AddButton(IItem item, Button.Action action, Vector2 position)
         {
-            AddEssentials();
-            for (int i = 0; i < items.Length; i++)
-            {
-                this.items[i] = new RecipeButtons(Game, crafting.SystemRecipes[i].craftedItems.GetInventory()[0], crafting.SystemRecipes[i]);
-                this.items[i].enabled = true;
-                this.Components.Add(items[i]);
-            }
-        }
-        internal void SetButtons(TemplateCraftingSystem crafting)
-        {
-            this.items = new RecipeButtons[crafting.SystemRecipes.Count()];
-        }
-        internal bool ButtonListeners(Button button,TemplateCraftingSystem crafting, ShopKeeper player, Recipe recipe)
-        {
-            if (player.CursorDown)
-            {
-                if (button.Contains(player.CursorPosition.ToPoint()))
-                {
-                    if (button.GetType() == typeof(RecipeButtons) && recipe != ((RecipeButtons)button).recipe)
-                    {
-
-                        recipe = ((RecipeButtons)button).recipe;
-                        recipe.LoadRecipe(true, recipe.ItemsNeeded);
-
-                        button.Buttonpressed();
-                        this.pressedButton = button;
-
-                        return true;
-                    }
-
-                    else if (button.GetType() != typeof(RecipeButtons))
-                    {
-                        button.Buttonpressed();
-                        pressedButton = button;
-                        if (button.delegatedMethod != null)
-                        {
-                            button.delegatedMethod();
-                        }
-                        return false;
-                    }
-                }
-            }
-            return false;
-        }
-        internal void ClickedRecipeButton(RecipeButtons.GetRecipe ChangedRecipe, int i, Recipe recipe, Point playercursor,Inventory someInventory)
-        {
-
-            ChangedRecipe();
+            RecipeButtons rb = new RecipeButtons(Game, item, ((ICraftable)item).itemRecipe);
+            rb.CreateButton(item.Name, position, Color.Magenta, Color.Black);
+            Components.Add(rb);
+            rb.delegatedMethod = action;
+            return rb;
         }
     }
     class MonoGameCrafting : MonoGamePage
@@ -96,19 +53,13 @@ namespace ShopGame.Pages
         {
             base.Initialize();
         }
-        public override void SetButtons()
-        {
-            if (canvas.GetType() == typeof(CraftingCanvas))
-                ((CraftingCanvas)canvas).SetButtons(crafting);
-            else
-                canvas.SetButtons(someInventory);
-        }
         public override void CreateButtons()
         {
-            if (canvas.GetType() == typeof(CraftingCanvas))
-                ((CraftingCanvas)canvas).CreateButtons(someInventory, crafting);
-            else
-                canvas.CreateButtons(someInventory);
+            foreach(var button in crafting.SystemRecipes)
+            {
+                ((CraftingCanvas)canvas).AddButton(button.craftedItems.GetInventory().FirstOrDefault(), SetRecipe,new Vector2(this.GraphicsDevice.Viewport.Width / 100, 50 + crafting.SystemRecipes.IndexOf(button) * 20));
+            }
+            base.CreateButtons();
         }
         public override void Update(GameTime gameTime)
         {
@@ -116,9 +67,9 @@ namespace ShopGame.Pages
             ButtonPressedtimer += gameTime.ElapsedGameTime.Milliseconds;
             if (ButtonPressedtimer < 2)
             {
-                if (canvas.pressedButton.pressed)
+                if (canvas.selectedItem.pressed)
                 {
-                    canvas.pressedButton.ButtonReleased();
+                    canvas.selectedItem.ButtonReleased();
                 }
             }
             base.Update(gameTime);
@@ -127,56 +78,51 @@ namespace ShopGame.Pages
         protected override void LoadContent()
         {
             base.LoadContent();
-            SetButtons();
             CreateButtons();
             action = CraftItem;
         }
-        protected override void NewButton(GameTime gameTime)
+        protected void NewButton(GameTime gameTime)
         {
-            canvas.Components.Remove(craft);
             craft = new Button(Game, "Craft");
             craft.Initialize();
-            craft.CreateButton("Craft", new Vector2(500, 100 + recipe.RecipeItems.Count() * 15), Color.White, Color.Black);
+            craft.CreateButton("Craft", new Vector2(this.GraphicsDevice.Viewport.Width/4, 100 + recipe.RecipeItems.Count() * 15), Color.White, Color.Black);
             craft.Draw(sb);
             craft.delegatedMethod = CraftItem;
+            canvas.DisplayableComponents.Add(craft);
             canvas.Components.Add(craft);
         }
 
         internal void CraftItem()
         {
             player.inventory.Add(crafting.Craft(recipe));
+            RecipeLoaded = false;
+            RenderRecipe = true;
+        }
+
+        public void SetRecipe()
+        {
+            if(this.canvas.selectedItem is RecipeButtons)
+            {
+                recipe = ((RecipeButtons)canvas.selectedItem).recipe;
+                RecipeLoaded = false;
+                RenderRecipe = true;
+            }
         }
 
         public override void Draw(GameTime gameTime)
         {
             sb.Begin();
             gt = gameTime;
-            for (int i = 0; i < canvas.Components.Count; i++)
-            {
 
-                if (canvas.Components[i] is Button)
-                {
-                    if (canvas.Components[i] is RecipeButtons)
-                    {
-                        canvas.Components[i].position = new Vector2(marginx, (i) * (((Button)canvas.Components[i]).bounds.Height + marginy));//NOTE Since crafted items at the moment are only one object type using [0] should be fine, however, if you can craft multiple things possibly change this
-                        ((Button)canvas.Components[i]).UpdateBoundaries(canvas.Components[i].position);
-                    }
-                    if (((CraftingCanvas)canvas).ButtonListeners((Button)canvas.Components[i], crafting, player, recipe))
-                    {
-                        recipe = ((RecipeButtons)canvas.Components[i]).recipe;
-                        recipe.LoadRecipe(true,player.inventory);
-                        RenderRecipe = true;
-                        RecipeLoaded = false;
-                    }
-                } else
-                {
-                    canvas.Components[i].position = new Vector2(500, 100);
-                }
-            }
             if (recipe != null)
             {
                 if (!RecipeLoaded)
                 {
+                    foreach(var component in canvas.DisplayableComponents)
+                    {
+                        canvas.Components.Remove(component);
+                    }
+                    recipe.LoadRecipe(true,player.inventory);
                     DrawRecipe(gameTime, recipe);
                     NewButton(gameTime);
                     RecipeLoaded = true;
